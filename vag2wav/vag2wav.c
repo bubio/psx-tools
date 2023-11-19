@@ -19,6 +19,12 @@ double f[5][2] = { { 0.0, 0.0 },
 
 double samples[28];
 
+static inline int16_t av_clip_int16(int a)
+{
+	if((a+0x8000) & ~0xFFFF) return (a>>31) ^ 0x7FFF;
+	else						 return a;
+}
+
 int main( int argc, char *argv[] )
 {
 	FILE *vag, *pcm;
@@ -170,7 +176,7 @@ int main( int argc, char *argv[] )
 			samples[i] = samples[i] + s_1 * f[predict_nr][0] + s_2 * f[predict_nr][1];
 			s_2 = s_1;
 			s_1 = samples[i];
-			d = (int) ( samples[i] + 0.5 );
+            d = av_clip_int16(samples[i] + 0.5);
 			fputc( d & 0xff, pcm );
 			fputc( d >> 8, pcm );
 		}
