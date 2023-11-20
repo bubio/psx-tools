@@ -1,7 +1,8 @@
 *~
-ps1_assets/*.*
+ps1_assets/*
 dbank.bin
 dstream.bin
 vag2wav.bin
 textdump.bin
 *.mpq
+.DS_Store
